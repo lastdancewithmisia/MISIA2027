@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #e7c675;
+    --gold-bright: #f1dca6;
+    --red: #d97b6c;
+    --wine-hdr: #2a1210;
+    --cell-bg: rgba(255,255,255,0.04);
+    --cell-bd: rgba(255,255,255,0.12);
+    --evt-bg: rgba(60,32,18,0.92);
+    --evt-bd: rgba(231,198,117,0.45);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: transparent;
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin: 0 auto;
+    padding: 12px 10px 30px;
+  }
+
+  /* ═══ Brand Lockup（装飾を排したシンプルな表記） ═══ */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: clamp(18px, 4vw, 36px) 10px clamp(26px, 4vw, 44px);
+    margin-bottom: 10px;
+  }
+
+  .brand-mark {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: clamp(10px, 2vw, 16px);
+  }
+
+  .brand-starts {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(12px, 1.6vw, 16px);
+    letter-spacing: 0;
+    color: var(--gold-bright);
+  }
+
+  .brand-presents {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(11px, 1.3vw, 14px);
+    letter-spacing: 0;
+    color: rgba(241,220,166,0.75);
+  }
+
+  .brand-misia {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 8vw, 92px);
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--gold-bright);
+    margin-bottom: clamp(10px, 2vw, 18px);
+  }
+
+  .brand-sub1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(14px, 2.2vw, 24px);
+    letter-spacing: 0;
+    color: #f4e6c4;
+    margin-bottom: 8px;
+  }
+
+  .brand-sub2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(12px, 1.6vw, 18px);
+    letter-spacing: 0;
+    color: rgba(244,230,196,0.85);
+    text-decoration: none;
+  }
+  .brand-sub2:hover { color: var(--gold-bright); }
+
+  /* ═══ Layout ═══ */
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .mwrap { }
+
+  .mlbl {
+    color: var(--gold-bright);
+    font-size: clamp(16px, 3.5vw, 28px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+    text-shadow:
+      0 0 20px rgba(255,215,0,0.6),
+      0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  /* ═══ Calendar Grid - ALL months 6 rows ═══ */
+  .cgrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto repeat(6, 95px);
+  }
+
+  .dh {
+    background: linear-gradient(180deg, #5c1f1f 0%, var(--wine-hdr) 100%);
+    color: #fff;
+    font-size: clamp(10px, 1.8vw, 14px);
+    font-weight: 700;
+    text-align: center;
+    padding: 6px 0;
+    letter-spacing: 1.5px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .dh:last-child { border-right: none; }
+  .dh.sat { color: #ffd9a0; }
+  .dh.sun { color: #ff8888; }
+
+  /* ═══ Date Cells - UNIFORM 95px height ═══ */
+  .dc {
+    height: 12vw; min-height: 58px; max-height: 95px;
+    overflow: visible;
+    position: relative;
+    padding: 6px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .dc.fil {
+    background: transparent;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .dc.fil:nth-child(7n) { border-right: none; }
+
+  .dc.emp {
+    background: transparent;
+    border: none;
+  }
+
+  /* Event cell - 舞台照明のゴールド発光 */
+  .dc.evt {
+    background: linear-gradient(160deg,
+      rgba(120,50,15,0.94) 0%,
+      rgba(70,20,10,0.94) 50%,
+      rgba(90,30,12,0.94) 100%);
+    border: 1.5px solid var(--evt-bd) !important;
+    box-shadow:
+      0 0 16px rgba(255,190,90,0.35),
+      inset 0 1px 0 rgba(255,225,180,0.2),
+      inset 0 -1px 0 rgba(180,90,30,0.3);
+    border-radius: 4px;
+  }
+
+  .dn {
+    font-size: 17px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.95);
+    line-height: 1;
+    width: 100%;
+    text-align: left;
+    padding-left: 4px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    margin-bottom: 3px;
+  }
+
+  .dc.evt .dn {
+    color: rgba(255,230,190,1);
+    text-shadow: 0 0 8px rgba(255,190,90,0.6);
+  }
+
+  .dc.sat .dn,
+  .dc.sun .dn,
+  .dc.hol .dn {
+    color: var(--red) !important;
+    text-shadow: 0 0 8px rgba(255,92,92,0.5) !important;
+  }
+
+  /* ═══ Event Content ═══ */
+  .ev {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 2px;
+  }
+
+  .vn {
+    width: 100%;
+    font-size: clamp(7px, 1.3vw, 10px);
+    font-weight: 700;
+    color: rgba(255,235,215,0.98);
+    text-align: center;
+    white-space: nowrap;
+    overflow: visible;
+    line-height: 1.35;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  }
+
+  .tm {
+    font-size: clamp(8px, 1.5vw, 11px);
+    font-weight: 700;
+    color: var(--gold);
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    text-shadow:
+      0 0 10px rgba(255,215,0,0.6),
+      0 1px 3px rgba(0,0,0,0.5);
+  }
+</style>
+<meta property="og:type"         content="website">
+<meta property="og:title"        content="STARTS presents MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM">
+<meta property="og:description"  content="MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM ライブスケジュール">
+</head>
+<body>
+<canvas id="bgcv" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+
+<div class="page">
+  <div class="brand">
+    <div class="brand-mark">
+      <span class="brand-starts">STARTS</span>
+      <span class="brand-presents">presents</span>
+    </div>
+    <div class="brand-misia">MISIA</div>
+    <div class="brand-sub1">BIG BAND ORCHESTRA</div>
+    <a class="brand-sub2" href="https://www.misia.jp/news/17845" target="_blank" rel="noopener">2027 BEYOND FREEDOM</a>
+  </div>
+
+  <div id="root"></div>
+</div>
+
+<script>
+// ===== ゴールドスポットライト・ステージ背景（星空の代わり） =====
+var BG_IMAGE = '';
+(function(){
+  var cv=document.getElementById('bgcv'), cx=cv.getContext('2d');
+  var seed=42; function rnd(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/4294967296;}
+
+  function draw(){
+    cv.width=window.innerWidth; cv.height=window.innerHeight;
+
+    if(BG_IMAGE){
+      var img=new Image();
+      img.onload=function(){cx.drawImage(img,0,0,cv.width,cv.height);};
+      img.src=BG_IMAGE; return;
+    }
+
+    // ── ベース：深いワインブラウン〜漆黒のグラデーション（重厚な幕） ──
+    var bg=cx.createLinearGradient(0,0,0,cv.height);
+    bg.addColorStop(0.00,'#0a0605');
+    bg.addColorStop(0.32,'#170a08');
+    bg.addColorStop(0.62,'#1f0f0a');
+    bg.addColorStop(1.00,'#0c0605');
+    cx.fillStyle=bg; cx.fillRect(0,0,cv.width,cv.height);
+
+    // ── ボケた舞台照明（ピントの合っていない大きな光の玉）を数個配置 ──
+    // 派手な光線やきらめきではなく、上質なコンサート写真のような滲んだ光で演出
+    seed=7;
+    var bokeh=[
+      {cx:.18, cy:.10, r:.22, col:'231,198,117', a:.20},
+      {cx:.82, cy:.06, r:.26, col:'196,140,70',  a:.16},
+      {cx:.50, cy:-.05, r:.34, col:'231,198,117', a:.22},
+      {cx:.08, cy:.55, r:.16, col:'150,90,50',   a:.10},
+      {cx:.92, cy:.62, r:.18, col:'160,100,55',  a:.10},
+      {cx:.35, cy:.88, r:.20, col:'120,70,45',   a:.09},
+      {cx:.68, cy:.92, r:.15, col:'150,95,55',   a:.08}
+    ];
+    bokeh.forEach(function(b){
+      var x=cv.width*b.cx, y=cv.height*b.cy, r=cv.width*b.r;
+      var g=cx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,'rgba('+b.col+','+b.a+')');
+      g.addColorStop(.6,'rgba('+b.col+','+(b.a*.35)+')');
+      g.addColorStop(1,'transparent');
+      cx.fillStyle=g; cx.beginPath(); cx.arc(x,y,r,0,Math.PI*2); cx.fill();
+    });
+
+    // ── 四隅を落として中央に視線を集めるヴィネット ──
+    var vg=cx.createRadialGradient(cv.width*.5,cv.height*.42,cv.height*.22,cv.width*.5,cv.height*.42,cv.width*.72);
+    vg.addColorStop(0,'rgba(0,0,0,0)');
+    vg.addColorStop(1,'rgba(0,0,0,.5)');
+    cx.fillStyle=vg; cx.fillRect(0,0,cv.width,cv.height);
+
+    // ── ごく微細な粒状感（フィルム写真のような質感） ──
+    seed=101;
+    for(var i=0;i<400;i++){
+      var x=rnd()*cv.width, y=rnd()*cv.height;
+      cx.fillStyle='rgba(255,240,220,'+(rnd()*0.025)+')';
+      cx.fillRect(x,y,1,1);
+    }
+  }
+  draw(); window.addEventListener('resize',draw);
+})();
+
+const MONTHS = [
+  {
+    name: '1月', fw: 4, days: 31,
+    ev: {
+      30: { v: ['福岡・マリンメッセ福岡A館'], t: 'OPEN/START 未定' },
+      31: { v: ['福岡・マリンメッセ福岡A館'], t: 'OPEN/START 未定' }
+    },
+    hol: [1, 2, 3]
+  },
+  {
+    name: '2月', fw: 0, days: 28,
+    ev: {
+      6:  { v: ['神奈川・横浜アリーナ'], t: 'OPEN/START 未定' },
+      7:  { v: ['神奈川・横浜アリーナ'], t: 'OPEN/START 未定' },
+      20: { v: ['兵庫・GLION ARENA KOBE'], t: 'OPEN/START 未定' },
+      21: { v: ['兵庫・GLION ARENA KOBE'], t: 'OPEN/START 未定' },
+      27: { v: ['岩手・盛岡タカヤアリーナ'], t: 'OPEN/START 未定' }
+    },
+    hol: [11, 23]
+  },
+  {
+    name: '3月', fw: 0, days: 31,
+    ev: {
+      3:  { v: ['愛知・クロコくんホール', '（日本ガイシホール）'], t: 'OPEN/START 未定' },
+      4:  { v: ['愛知・クロコくんホール', '（日本ガイシホール）'], t: 'OPEN/START 未定' },
+      13: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
+      14: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
+      27: { v: ['香川・あなぶきアリーナ香川'], t: 'OPEN/START 未定' },
+      28: { v: ['香川・あなぶきアリーナ香川'], t: 'OPEN/START 未定' }
+    },
+    hol: [21]
+  },
+  {
+    name: '4月', fw: 3, days: 30,
+    ev: {
+      3:  { v: ['東京・有明アリーナ'], t: 'OPEN/START 未定' },
+      4:  { v: ['東京・有明アリーナ'], t: 'OPEN/START 未定' },
+      10: { v: ['沖縄・沖縄サントリーアリーナ'], t: 'OPEN/START 未定' },
+      11: { v: ['沖縄・沖縄サントリーアリーナ'], t: 'OPEN/START 未定' },
+      17: { v: ['広島・広島グリーンアリーナ'], t: 'OPEN/START 未定' },
+      18: { v: ['広島・広島グリーンアリーナ'], t: 'OPEN/START 未定' },
+      22: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
+      23: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' }
+    },
+    hol: [29]
+  },
+  {
+    name: '5月', fw: 5, days: 31,
+    ev: {
+      1: { v: ['北海道・真駒内', 'セキスイハイムアイスアリーナ'], t: 'OPEN/START 未定' },
+      2: { v: ['北海道・真駒内', 'セキスイハイムアイスアリーナ'], t: 'OPEN/START 未定' }
+    },
+    hol: [3, 4, 5]
+  }
+];
+
+function buildMonth(m) {
+  const wrap = document.createElement('div');
+  wrap.className = 'mwrap';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'mlbl';
+  lbl.textContent = m.name;
+  wrap.appendChild(lbl);
+
+  const grid = document.createElement('div');
+  grid.className = 'cgrid';
+
+  ['月', '火', '水', '木', '金', '土', '日'].forEach((d, i) => {
+    const th = document.createElement('div');
+    th.className = 'dh' + (i === 5 ? ' sat' : i === 6 ? ' sun' : '');
+    th.textContent = d;
+    grid.appendChild(th);
+  });
+
+  const off = m.fw;
+  const hset = new Set(m.hol);
+
+  const totalCells = 42;
+
+  for (let i = 0; i < totalCells; i++) {
+    const day = i - off + 1;
+    const col = i % 7;
+    const dc = document.createElement('div');
+
+    if (i < off || day > m.days) {
+      dc.className = 'dc emp';
+      grid.appendChild(dc);
+      continue;
+    }
+
+    const isSat = col === 5;
+    const isSun = col === 6;
+    const isHol = hset.has(day);
+    const e = m.ev[day];
+
+    let cls = 'dc fil';
+    if (isSat) cls += ' sat';
+    if (isSun) cls += ' sun';
+    if (isHol) cls += ' hol';
+    if (e) cls += ' evt';
+    dc.className = cls;
+
+    const dn = document.createElement('div');
+    dn.className = 'dn';
+    dn.textContent = day;
+    dc.appendChild(dn);
+
+    if (e) {
+      const ev = document.createElement('div');
+      ev.className = 'ev';
+      e.v.forEach(line => {
+        const p = document.createElement('div');
+        p.className = 'vn';
+        p.textContent = line;
+        ev.appendChild(p);
+      });
+      const t = document.createElement('div');
+      t.className = 'tm';
+      t.textContent = e.t;
+      ev.appendChild(t);
+      dc.appendChild(ev);
+    }
+
+    grid.appendChild(dc);
+  }
+
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+const root = document.getElementById('root');
+
+[[0],[1],[2],[3],[4]].forEach(pair => {
+  const row = document.createElement('div');
+  row.className = 'row';
+  pair.forEach(i => row.appendChild(buildMonth(MONTHS[i])));
+  if (pair.length === 1) row.appendChild(document.createElement('div'));
+  root.appendChild(row);
+});
+</script>
+</body>
+</html>
