@@ -2,467 +2,312 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="color-scheme" content="light">
 <title>MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold: #e7c675;
-    --gold-bright: #f1dca6;
-    --red: #d97b6c;
-    --wine-hdr: #2a1210;
-    --cell-bg: rgba(255,255,255,0.04);
-    --cell-bd: rgba(255,255,255,0.12);
-    --evt-bg: rgba(60,32,18,0.92);
-    --evt-bd: rgba(231,198,117,0.45);
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    background: transparent;
-    font-family: 'Noto Sans JP', sans-serif;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: auto;
-  }
-
-  .page {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    margin: 0 auto;
-    padding: 12px 10px 30px;
-  }
-
-  /* ═══ Brand Lockup（装飾を排したシンプルな表記） ═══ */
-  .brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: clamp(18px, 4vw, 36px) 10px clamp(26px, 4vw, 44px);
-    margin-bottom: 10px;
-  }
-
-  .brand-mark {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: clamp(10px, 2vw, 16px);
-  }
-
-  .brand-starts {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 700;
-    font-size: clamp(12px, 1.6vw, 16px);
-    letter-spacing: 0;
-    color: var(--gold-bright);
-  }
-
-  .brand-presents {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 700;
-    font-size: clamp(11px, 1.3vw, 14px);
-    letter-spacing: 0;
-    color: rgba(241,220,166,0.75);
-  }
-
-  .brand-misia {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 700;
-    font-size: clamp(38px, 8vw, 92px);
-    line-height: 1;
-    letter-spacing: 0;
-    color: var(--gold-bright);
-    margin-bottom: clamp(10px, 2vw, 18px);
-  }
-
-  .brand-sub1 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 700;
-    font-size: clamp(14px, 2.2vw, 24px);
-    letter-spacing: 0;
-    color: #f4e6c4;
-    margin-bottom: 8px;
-  }
-
-  .brand-sub2 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 700;
-    font-size: clamp(12px, 1.6vw, 18px);
-    letter-spacing: 0;
-    color: rgba(244,230,196,0.85);
-    text-decoration: none;
-  }
-  .brand-sub2:hover { color: var(--gold-bright); }
-
-  /* ═══ Layout ═══ */
-  .row {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-
-  .mwrap { }
-
-  .mlbl {
-    color: var(--gold-bright);
-    font-size: clamp(16px, 3.5vw, 28px);
-    font-weight: 900;
-    letter-spacing: 4px;
-    margin-bottom: 6px;
-    padding-left: 4px;
-    text-shadow:
-      0 0 20px rgba(255,215,0,0.6),
-      0 2px 8px rgba(0,0,0,0.5);
-  }
-
-  /* ═══ Calendar Grid - ALL months 6 rows ═══ */
-  .cgrid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: auto repeat(6, 95px);
-  }
-
-  .dh {
-    background: linear-gradient(180deg, #5c1f1f 0%, var(--wine-hdr) 100%);
-    color: #fff;
-    font-size: clamp(10px, 1.8vw, 14px);
-    font-weight: 700;
-    text-align: center;
-    padding: 6px 0;
-    letter-spacing: 1.5px;
-    border-right: 1px solid rgba(255,255,255,0.15);
-    border-bottom: 2px solid rgba(255,255,255,0.2);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-  .dh:last-child { border-right: none; }
-  .dh.sat { color: #ffd9a0; }
-  .dh.sun { color: #ff8888; }
-
-  /* ═══ Date Cells - UNIFORM 95px height ═══ */
-  .dc {
-    height: 12vw; min-height: 58px; max-height: 95px;
-    overflow: visible;
-    position: relative;
-    padding: 6px 5px 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .dc.fil {
-    background: transparent;
-    border-right: 1px solid rgba(255,255,255,0.15);
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-  }
-  .dc.fil:nth-child(7n) { border-right: none; }
-
-  .dc.emp {
-    background: transparent;
-    border: none;
-  }
-
-  /* Event cell - 舞台照明のゴールド発光 */
-  .dc.evt {
-    background: linear-gradient(160deg,
-      rgba(120,50,15,0.94) 0%,
-      rgba(70,20,10,0.94) 50%,
-      rgba(90,30,12,0.94) 100%);
-    border: 1.5px solid var(--evt-bd) !important;
-    box-shadow:
-      0 0 16px rgba(255,190,90,0.35),
-      inset 0 1px 0 rgba(255,225,180,0.2),
-      inset 0 -1px 0 rgba(180,90,30,0.3);
-    border-radius: 4px;
-  }
-
-  .dn {
-    font-size: 17px;
-    font-weight: 900;
-    color: rgba(255,255,255,0.95);
-    line-height: 1;
-    width: 100%;
-    text-align: left;
-    padding-left: 4px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
-    margin-bottom: 3px;
-  }
-
-  .dc.evt .dn {
-    color: rgba(255,230,190,1);
-    text-shadow: 0 0 8px rgba(255,190,90,0.6);
-  }
-
-  .dc.sat .dn,
-  .dc.sun .dn,
-  .dc.hol .dn {
-    color: var(--red) !important;
-    text-shadow: 0 0 8px rgba(255,92,92,0.5) !important;
-  }
-
-  /* ═══ Event Content ═══ */
-  .ev {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    gap: 2px;
-  }
-
-  .vn {
-    width: 100%;
-    font-size: clamp(7px, 1.3vw, 10px);
-    font-weight: 700;
-    color: rgba(255,235,215,0.98);
-    text-align: center;
-    white-space: nowrap;
-    overflow: visible;
-    line-height: 1.35;
-    letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-  }
-
-  .tm {
-    font-size: clamp(8px, 1.5vw, 11px);
-    font-weight: 700;
-    color: var(--gold);
-    text-align: center;
-    white-space: nowrap;
-    letter-spacing: 1px;
-    margin-top: 2px;
-    text-shadow:
-      0 0 10px rgba(255,215,0,0.6),
-      0 1px 3px rgba(0,0,0,0.5);
-  }
-</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CMFKCCVXER"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CMFKCCVXER');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <meta property="og:type"         content="website">
 <meta property="og:title"        content="STARTS presents MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM">
 <meta property="og:description"  content="MISIA BIG BAND ORCHESTRA 2027 BEYOND FREEDOM ライブスケジュール">
+<meta property="og:url"          content="https://lastdancewithmisia.github.io/MISIA2027/">
+<meta property="og:image"        content="https://lastdancewithmisia.github.io/MISIA2027/ogp.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:image"       content="https://lastdancewithmisia.github.io/MISIA2027/ogp.png">
+<style>
+  :root {
+    --bg:        #f2d0dc;
+    --mg:        #e8007a;   /* マゼンタ */
+    --rg:        #c080a0;   /* グレーピンク */
+    --cyan:      #009bbd;
+    --white:     #ffffff;
+    --cell-bd:   rgba(180,0,90,0.18);
+    --dh-top:    #d83878;
+    --dh-bot:    #a00050;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { color-scheme: light; }
+  body {
+    background: var(--bg) !important;
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    overflow-x: auto;
+    color-scheme: light;
+  }
+  .page { width:100%; padding:0 10px 40px; }
+
+  /* ─── Header ─── */
+  .header { text-align:center; padding:clamp(16px,3vw,32px) 16px clamp(8px,1.5vw,16px); }
+
+  /* MISIA: M=mg I=rg S=mg I=rg A=mg */
+  .misia-wrap {
+    display:flex; justify-content:center; align-items:flex-end;
+    line-height:0.88; margin-bottom:clamp(2px,0.5vw,5px);
+  }
+  .mc { font-family:'Bebas Neue',sans-serif; font-size:clamp(58px,14vw,142px); font-weight:900; display:inline-block; }
+  .mg { color:var(--mg); }
+  .rg { color:var(--rg); }
+
+  /* BIG=rg BAND=mg ORCHESTRA=rg 2027=rg */
+  .bbo-block { margin-bottom:clamp(1px,0.4vw,4px); }
+  .bbo-line { display:flex; align-items:baseline; justify-content:center; gap:0; flex-wrap:wrap; }
+  .bbt { font-family:'Bebas Neue',sans-serif; font-size:clamp(13px,2.8vw,32px); letter-spacing:2px; display:inline; }
+
+  /* BEYOND: B=rg E=mg Y=rg O=mg N=rg D=mg */
+  .beyond-wrap { display:flex; justify-content:center; align-items:flex-end; line-height:0.92; margin-bottom:clamp(0px,0.3vw,3px); }
+  .byt { font-family:'Bebas Neue',sans-serif; font-size:clamp(30px,7vw,72px); letter-spacing:2px; display:inline-block; }
+
+  /* FREEDOM: F=mg R=rg E=mg E=rg D=mg O=rg M=mg */
+  .freedom-wrap { display:flex; justify-content:center; align-items:flex-end; line-height:0.9; }
+  .frt { font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,11vw,112px); letter-spacing:2px; display:inline-block; }
+
+  .header-divider {
+    width:80%; max-width:480px; height:3px;
+    background:linear-gradient(90deg,transparent,var(--mg),transparent);
+    margin:clamp(8px,2vw,18px) auto; border-radius:2px;
+  }
+
+  /* ─── Calendar ─── */
+  .row { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:14px; }
+  .mlbl {
+    font-family:'Bebas Neue',sans-serif; color:var(--mg);
+    font-size:clamp(22px,5vw,40px); font-weight:900;
+    letter-spacing:5px; margin-bottom:6px; padding-left:4px;
+  }
+  .cgrid {
+    display:grid; grid-template-columns:repeat(7,1fr);
+    overflow:hidden;
+  }
+
+
+  .dh {
+    background:linear-gradient(180deg,var(--dh-top) 0%,var(--dh-bot) 100%);
+    color:var(--white); font-size:clamp(11px,1.9vw,15px); font-weight:900;
+    text-align:center; padding:8px 0; letter-spacing:2px;
+    border-right:1px solid rgba(255,255,255,0.22);
+    border-bottom:2px solid rgba(255,255,255,0.18);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+  .dh:last-child { border-right:none; }
+  .dh.sat,.dh.sun { background:linear-gradient(180deg,#c03878 0%,#80204a 100%); color:#ffd0e8; }
+
+  .dc {
+    height:100%; overflow:visible; padding:5px 4px 3px; box-sizing:border-box;
+    display:flex; flex-direction:column; align-items:flex-start;
+    background:transparent;
+    border:none;
+  }
+
+  .dc.emp { background:transparent; border:none; }
+  .week-line { border-top:1.5px solid rgba(150,0,75,0.5); }
+  .dc.evt {
+    background:linear-gradient(135deg,rgba(255,210,230,0.75) 0%,rgba(240,175,205,0.55) 45%,rgba(195,95,145,0.35) 100%);
+    border:2px solid rgba(200,0,100,0.55);
+    border-radius:6px;
+    box-shadow:inset 2px 2px 6px rgba(255,230,240,0.6),inset -2px -2px 6px rgba(155,35,85,0.22),0 0 8px rgba(200,0,100,0.15);
+  }
+
+
+  /* 日付数字：平日イベントは黒、土日祝のみマゼンタ */
+  .dn {
+    font-size:clamp(13px,2.5vw,18px); font-weight:900;
+    color:#1a0008;   /* 黒に近い色（デフォルト） */
+    line-height:1; margin-bottom:1px;
+    font-family:'Bebas Neue','Noto Sans JP',sans-serif; letter-spacing:1px;
+  }
+  .dc.sat .dn,.dc.sun .dn,.dc.hol .dn { color:var(--mg) !important; }
+  /* イベントセルでも平日は黒のまま（土日祝だけマゼンタ） */
+  .dc.evt .dn { color:#1a0008; }
+  .dc.evt.sat .dn,.dc.evt.sun .dn,.dc.evt.hol .dn { color:var(--mg) !important; }
+
+  .ev { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; flex:1; gap:1px; margin-top:1px; }
+  .vn {
+    width:100%; font-size:clamp(6.5px,1.2vw,9.5px); font-weight:700;
+    color:#1a0008; text-align:center; white-space:nowrap; overflow:visible;
+    line-height:1.35; letter-spacing:0.2px;
+  }
+  .tm {
+    font-size:clamp(6px,1.1vw,9px); font-weight:900; color:var(--cyan);
+    text-align:center; white-space:normal; word-break:keep-all;
+    letter-spacing:0.3px; margin-top:2px; line-height:1.25;
+    width:100%; overflow:visible;
+    font-family:'Bebas Neue','Noto Sans JP',sans-serif;
+  }
+</style>
 </head>
 <body>
-<canvas id="bgcv" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
-
 <div class="page">
-  <div class="brand">
-    <div class="brand-mark">
-      <span class="brand-starts">STARTS</span>
-      <span class="brand-presents">presents</span>
+  <div class="header">
+
+    <!-- MISIA: M=mg I=rg S=mg I=rg A=mg -->
+    <div class="misia-wrap">
+      <span class="mc mg">M</span>
+      <span class="mc rg">I</span>
+      <span class="mc mg">S</span>
+      <span class="mc rg">I</span>
+      <span class="mc mg">A</span>
     </div>
-    <div class="brand-misia">MISIA</div>
-    <div class="brand-sub1">BIG BAND ORCHESTRA</div>
-    <a class="brand-sub2" href="https://www.misia.jp/news/17845" target="_blank" rel="noopener">2027 BEYOND FREEDOM</a>
+
+    <!-- BIG=rg  BAND=mg  ORCHESTRA=rg  2027=rg -->
+    <div class="bbo-block">
+      <div class="bbo-line">
+        <span class="bbt rg">BIG&nbsp;</span>
+        <span class="bbt mg">BAND&nbsp;</span>
+        <span class="bbt rg">ORCHESTRA&nbsp;</span>
+        <span class="bbt rg">2027</span>
+      </div>
+    </div>
+
+    <!-- BEYOND: B=rg E=mg Y=rg O=mg N=rg D=mg -->
+    <div class="beyond-wrap">
+      <span class="byt rg">B</span>
+      <span class="byt mg">E</span>
+      <span class="byt rg">Y</span>
+      <span class="byt mg">O</span>
+      <span class="byt rg">N</span>
+      <span class="byt mg">D</span>
+    </div>
+
+    <!-- FREEDOM: F=mg R=rg E=mg E=rg D=mg O=rg M=mg -->
+    <div class="freedom-wrap">
+      <span class="frt mg">F</span>
+      <span class="frt rg">R</span>
+      <span class="frt mg">E</span>
+      <span class="frt rg">E</span>
+      <span class="frt mg">D</span>
+      <span class="frt rg">O</span>
+      <span class="frt mg">M</span>
+    </div>
+
+    <div class="header-divider"></div>
   </div>
 
   <div id="root"></div>
 </div>
 
 <script>
-// ===== ゴールドスポットライト・ステージ背景（星空の代わり） =====
-var BG_IMAGE = '';
-(function(){
-  var cv=document.getElementById('bgcv'), cx=cv.getContext('2d');
-  var seed=42; function rnd(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/4294967296;}
-
-  function draw(){
-    cv.width=window.innerWidth; cv.height=window.innerHeight;
-
-    if(BG_IMAGE){
-      var img=new Image();
-      img.onload=function(){cx.drawImage(img,0,0,cv.width,cv.height);};
-      img.src=BG_IMAGE; return;
-    }
-
-    // ── ベース：深いワインブラウン〜漆黒のグラデーション（重厚な幕） ──
-    var bg=cx.createLinearGradient(0,0,0,cv.height);
-    bg.addColorStop(0.00,'#0a0605');
-    bg.addColorStop(0.32,'#170a08');
-    bg.addColorStop(0.62,'#1f0f0a');
-    bg.addColorStop(1.00,'#0c0605');
-    cx.fillStyle=bg; cx.fillRect(0,0,cv.width,cv.height);
-
-    // ── ボケた舞台照明（ピントの合っていない大きな光の玉）を数個配置 ──
-    // 派手な光線やきらめきではなく、上質なコンサート写真のような滲んだ光で演出
-    seed=7;
-    var bokeh=[
-      {cx:.18, cy:.10, r:.22, col:'231,198,117', a:.20},
-      {cx:.82, cy:.06, r:.26, col:'196,140,70',  a:.16},
-      {cx:.50, cy:-.05, r:.34, col:'231,198,117', a:.22},
-      {cx:.08, cy:.55, r:.16, col:'150,90,50',   a:.10},
-      {cx:.92, cy:.62, r:.18, col:'160,100,55',  a:.10},
-      {cx:.35, cy:.88, r:.20, col:'120,70,45',   a:.09},
-      {cx:.68, cy:.92, r:.15, col:'150,95,55',   a:.08}
-    ];
-    bokeh.forEach(function(b){
-      var x=cv.width*b.cx, y=cv.height*b.cy, r=cv.width*b.r;
-      var g=cx.createRadialGradient(x,y,0,x,y,r);
-      g.addColorStop(0,'rgba('+b.col+','+b.a+')');
-      g.addColorStop(.6,'rgba('+b.col+','+(b.a*.35)+')');
-      g.addColorStop(1,'transparent');
-      cx.fillStyle=g; cx.beginPath(); cx.arc(x,y,r,0,Math.PI*2); cx.fill();
-    });
-
-    // ── 四隅を落として中央に視線を集めるヴィネット ──
-    var vg=cx.createRadialGradient(cv.width*.5,cv.height*.42,cv.height*.22,cv.width*.5,cv.height*.42,cv.width*.72);
-    vg.addColorStop(0,'rgba(0,0,0,0)');
-    vg.addColorStop(1,'rgba(0,0,0,.5)');
-    cx.fillStyle=vg; cx.fillRect(0,0,cv.width,cv.height);
-
-    // ── ごく微細な粒状感（フィルム写真のような質感） ──
-    seed=101;
-    for(var i=0;i<400;i++){
-      var x=rnd()*cv.width, y=rnd()*cv.height;
-      cx.fillStyle='rgba(255,240,220,'+(rnd()*0.025)+')';
-      cx.fillRect(x,y,1,1);
-    }
-  }
-  draw(); window.addEventListener('resize',draw);
-})();
-
 const MONTHS = [
   {
-    name: '1月', fw: 4, days: 31,
-    ev: {
-      30: { v: ['福岡・マリンメッセ福岡A館'], t: 'OPEN/START 未定' },
-      31: { v: ['福岡・マリンメッセ福岡A館'], t: 'OPEN/START 未定' }
+    name:'1月', fw:4, days:31,
+    ev:{
+      30:{v:['福岡・マリンメッセ福岡A館'],t:'開場16:00/開演17:00'},
+      31:{v:['福岡・マリンメッセ福岡A館'],t:'開場15:00/開演16:00'}
     },
-    hol: [1, 2, 3]
+    hol:[1,2,3]
   },
   {
-    name: '2月', fw: 0, days: 28,
-    ev: {
-      6:  { v: ['神奈川・横浜アリーナ'], t: 'OPEN/START 未定' },
-      7:  { v: ['神奈川・横浜アリーナ'], t: 'OPEN/START 未定' },
-      20: { v: ['兵庫・GLION ARENA KOBE'], t: 'OPEN/START 未定' },
-      21: { v: ['兵庫・GLION ARENA KOBE'], t: 'OPEN/START 未定' },
-      27: { v: ['岩手・盛岡タカヤアリーナ'], t: 'OPEN/START 未定' }
+    name:'2月', fw:0, days:28,
+    ev:{
+      6: {v:['神奈川・横浜アリーナ'],t:'開場16:00/開演17:00'},
+      7: {v:['神奈川・横浜アリーナ'],t:'開場15:00/開演16:00'},
+      20:{v:['兵庫・GLION ARENA KOBE'],t:'開場16:00/開演17:00'},
+      21:{v:['兵庫・GLION ARENA KOBE'],t:'開場15:00/開演16:00'},
+      27:{v:['岩手・盛岡タカヤアリーナ'],t:'開場16:00/開演17:00'}
     },
-    hol: [11, 23]
+    hol:[11,23]
   },
   {
-    name: '3月', fw: 0, days: 31,
-    ev: {
-      3:  { v: ['愛知・クロコくんホール', '（日本ガイシホール）'], t: 'OPEN/START 未定' },
-      4:  { v: ['愛知・クロコくんホール', '（日本ガイシホール）'], t: 'OPEN/START 未定' },
-      13: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
-      14: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
-      27: { v: ['香川・あなぶきアリーナ香川'], t: 'OPEN/START 未定' },
-      28: { v: ['香川・あなぶきアリーナ香川'], t: 'OPEN/START 未定' }
+    name:'3月', fw:0, days:31,
+    ev:{
+      3: {v:['愛知・クロコくんホール','（日本ガイシホール）'],t:'開場17:00/開演18:00'},
+      4: {v:['愛知・クロコくんホール','（日本ガイシホール）'],t:'開場17:00/開演18:00'},
+      13:{v:['大阪・大阪城ホール'],t:'開場16:00/開演17:00'},
+      14:{v:['大阪・大阪城ホール'],t:'開場15:00/開演16:00'},
+      27:{v:['香川・あなぶきアリーナ香川'],t:'開場16:00/開演17:00'},
+      28:{v:['香川・あなぶきアリーナ香川'],t:'開場15:00/開演16:00'}
     },
-    hol: [21]
+    hol:[21]
   },
   {
-    name: '4月', fw: 3, days: 30,
-    ev: {
-      3:  { v: ['東京・有明アリーナ'], t: 'OPEN/START 未定' },
-      4:  { v: ['東京・有明アリーナ'], t: 'OPEN/START 未定' },
-      10: { v: ['沖縄・沖縄サントリーアリーナ'], t: 'OPEN/START 未定' },
-      11: { v: ['沖縄・沖縄サントリーアリーナ'], t: 'OPEN/START 未定' },
-      17: { v: ['広島・広島グリーンアリーナ'], t: 'OPEN/START 未定' },
-      18: { v: ['広島・広島グリーンアリーナ'], t: 'OPEN/START 未定' },
-      22: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' },
-      23: { v: ['大阪・大阪城ホール'], t: 'OPEN/START 未定' }
+    name:'4月', fw:3, days:30,
+    ev:{
+      3: {v:['東京・有明アリーナ'],t:'開場16:00/開演17:00'},
+      4: {v:['東京・有明アリーナ'],t:'開場15:00/開演16:00'},
+      10:{v:['沖縄・沖縄サントリーアリーナ'],t:'開場16:00/開演17:00'},
+      11:{v:['沖縄・沖縄サントリーアリーナ'],t:'開場15:00/開演16:00'},
+      17:{v:['広島・広島グリーンアリーナ'],t:'開場16:00/開演17:00'},
+      18:{v:['広島・広島グリーンアリーナ'],t:'開場15:00/開演16:00'},
+      22:{v:['大阪・大阪城ホール'],t:'開場17:00/開演18:00'},
+      23:{v:['大阪・大阪城ホール'],t:'開場17:00/開演18:00'}
     },
-    hol: [29]
+    hol:[29]
   },
   {
-    name: '5月', fw: 5, days: 31,
-    ev: {
-      1: { v: ['北海道・真駒内', 'セキスイハイムアイスアリーナ'], t: 'OPEN/START 未定' },
-      2: { v: ['北海道・真駒内', 'セキスイハイムアイスアリーナ'], t: 'OPEN/START 未定' }
+    name:'5月', fw:5, days:31,
+    ev:{
+      1:{v:['北海道・真駒内','セキスイハイムアイスアリーナ'],t:'開場16:00/開演17:00'},
+      2:{v:['北海道・真駒内','セキスイハイムアイスアリーナ'],t:'開場15:00/開演16:00'}
     },
-    hol: [3, 4, 5]
+    hol:[3,4,5]
   }
 ];
 
-function buildMonth(m) {
-  const wrap = document.createElement('div');
-  wrap.className = 'mwrap';
-
-  const lbl = document.createElement('div');
-  lbl.className = 'mlbl';
-  lbl.textContent = m.name;
-  wrap.appendChild(lbl);
-
-  const grid = document.createElement('div');
-  grid.className = 'cgrid';
-
-  ['月', '火', '水', '木', '金', '土', '日'].forEach((d, i) => {
-    const th = document.createElement('div');
-    th.className = 'dh' + (i === 5 ? ' sat' : i === 6 ? ' sun' : '');
-    th.textContent = d;
-    grid.appendChild(th);
+function buildMonth(m){
+  const wrap=document.createElement('div');
+  const lbl=document.createElement('div');
+  lbl.className='mlbl'; lbl.textContent=m.name; wrap.appendChild(lbl);
+  const grid=document.createElement('div'); grid.className='cgrid';
+  ['月','火','水','木','金','土','日'].forEach((d,i)=>{
+    const th=document.createElement('div');
+    th.className='dh'+(i===5?' sat':i===6?' sun':'');
+    th.textContent=d; grid.appendChild(th);
   });
-
-  const off = m.fw;
-  const hset = new Set(m.hol);
-
-  const totalCells = 42;
-
-  for (let i = 0; i < totalCells; i++) {
-    const day = i - off + 1;
-    const col = i % 7;
-    const dc = document.createElement('div');
-
-    if (i < off || day > m.days) {
-      dc.className = 'dc emp';
-      grid.appendChild(dc);
-      continue;
+  const hset=new Set(m.hol);
+  // 実際に必要な週数だけ表示（空白行を作らない）
+  const weeks = Math.ceil((m.fw + m.days) / 7);
+  const rowH = window.innerWidth >= 600 ? '84px' : '15vw';
+  grid.style.gridTemplateRows = 'auto repeat(' + weeks + ', ' + rowH + ')';
+  const totalCells = weeks * 7;
+  for(let i=0;i<totalCells;i++){
+    const day=i-m.fw+1, col=i%7;
+    const dc=document.createElement('div');
+    const isWeekStart = (i >= 7); // 2週目以降の全セル＝週の区切り行
+    if(i<m.fw||day>m.days){
+      dc.className='dc emp'+(isWeekStart?' week-line':'');
+      grid.appendChild(dc); continue;
     }
-
-    const isSat = col === 5;
-    const isSun = col === 6;
-    const isHol = hset.has(day);
-    const e = m.ev[day];
-
-    let cls = 'dc fil';
-    if (isSat) cls += ' sat';
-    if (isSun) cls += ' sun';
-    if (isHol) cls += ' hol';
-    if (e) cls += ' evt';
-    dc.className = cls;
-
-    const dn = document.createElement('div');
-    dn.className = 'dn';
-    dn.textContent = day;
-    dc.appendChild(dn);
-
-    if (e) {
-      const ev = document.createElement('div');
-      ev.className = 'ev';
-      e.v.forEach(line => {
-        const p = document.createElement('div');
-        p.className = 'vn';
-        p.textContent = line;
-        ev.appendChild(p);
+    const isSat=col===5, isSun=col===6, isHol=hset.has(day), e=m.ev[day];
+    dc.className='dc'
+      +(isSat?' sat':isSun?' sun':'')
+      +(isHol?' hol':'')
+      +(e?' evt':'')
+      +(isWeekStart?' week-line':'');
+    const dn=document.createElement('div');
+    dn.className='dn'; dn.textContent=day; dc.appendChild(dn);
+    if(e){
+      const ev=document.createElement('div'); ev.className='ev';
+      e.v.forEach(line=>{
+        const p=document.createElement('div');
+        p.className='vn'; p.textContent=line; ev.appendChild(p);
       });
-      const t = document.createElement('div');
-      t.className = 'tm';
-      t.textContent = e.t;
-      ev.appendChild(t);
+      const t=document.createElement('div');
+      t.className='tm'; t.textContent=e.t; ev.appendChild(t);
       dc.appendChild(ev);
     }
-
     grid.appendChild(dc);
   }
-
-  wrap.appendChild(grid);
-  return wrap;
+  wrap.appendChild(grid); return wrap;
 }
 
-const root = document.getElementById('root');
-
-[[0],[1],[2],[3],[4]].forEach(pair => {
-  const row = document.createElement('div');
-  row.className = 'row';
-  pair.forEach(i => row.appendChild(buildMonth(MONTHS[i])));
-  if (pair.length === 1) row.appendChild(document.createElement('div'));
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.cgrid').forEach(grid => {
+    const weeks = parseInt(grid.style.gridTemplateRows.match(/repeat\((\d+)/)?.[1] || 6);
+    const rowH = window.innerWidth >= 600 ? '84px' : '15vw';
+    grid.style.gridTemplateRows = 'auto repeat(' + weeks + ', ' + rowH + ')';
+  });
+});
+const root=document.getElementById('root');
+[[0],[1],[2],[3],[4]].forEach(pair=>{
+  const row=document.createElement('div'); row.className='row';
+  pair.forEach(i=>row.appendChild(buildMonth(MONTHS[i])));
   root.appendChild(row);
 });
 </script>
